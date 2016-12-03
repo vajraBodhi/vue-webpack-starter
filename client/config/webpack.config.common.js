@@ -24,7 +24,11 @@ const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin'
 const METADATA = {
     title: 'Vue Starter',
     baseUrl: '/',
-    isDevServer: helpers.isWebpackDevServer()
+    isDevServer: helpers.isWebpackDevServer(),
+    CDN: "your cdn url",
+    CONFIG: {
+        // your app config,自定义配置信息
+    }
 };
 
 module.exports = {

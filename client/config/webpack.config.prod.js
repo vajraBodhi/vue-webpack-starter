@@ -25,10 +25,7 @@ const METADATA = webpackMerge(commonConfig.metadata, {
     host: HOST,
     port: PORT,
     ENV: ENV,
-    HMR: false,
-    CONFIG: {
-        // your custom config
-    }
+    HMR: false
 });
 
 module.exports = validate(webpackMerge(commonConfig, {
@@ -42,7 +39,8 @@ module.exports = validate(webpackMerge(commonConfig, {
         path: helpers.root('dist'),
         filename: "[name].[chunkhash].bundle.js",
         sourceMapFilename: '[name].[chunkhash].bundle.map',
-        chunkFilename: '[id].[chunkhash].chunk.js'
+        chunkFilename: '[id].[chunkhash].chunk.js'//,
+        // publicPath: METADATA.CDN
     },
 
     plugins: [

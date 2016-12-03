@@ -26,10 +26,7 @@ const METADATA = webpackMerge(commonConfig.metadata, {
     host: HOST,
     port: PORT,
     ENV: ENV,
-    HMR: HMR,
-    CONFIG: {
-        // your app config,自定义配置信息
-    }
+    HMR: HMR
 });
 
 module.exports = validate(webpackMerge(commonConfig, {
