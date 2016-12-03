@@ -64,6 +64,8 @@ module.exports = validate(webpackMerge(commonConfig, {
         host: METADATA.host,
         port: METADATA.port,
         historyApiFallback: true,
+        open: true,
+        inline: true,
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
