@@ -20,7 +20,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // 常量
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || '3000';
+const PORT = process.env.PORT || '8000';
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = webpackMerge(commonConfig.metadata, {
     host: HOST,
@@ -28,6 +28,8 @@ const METADATA = webpackMerge(commonConfig.metadata, {
     ENV: ENV,
     HMR: HMR
 });
+
+console.log(helpers.root('dist'));
 
 module.exports = validate(webpackMerge(commonConfig, {
     metadata: METADATA,
@@ -69,7 +71,8 @@ module.exports = validate(webpackMerge(commonConfig, {
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
-        }
+        },
+        outputPath: METADATA.host + ':' + METADATA.port + '/'
     },
 
     node: {

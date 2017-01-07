@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "webpack --config config/webpack.config.dev.js --progress --profile --colors --display-error-details --display-cached",
     "build:prod": "webpack --config config/webpack.config.prod.js  --progress --profile --colors --display-error-details --display-cached --bail",
-    "server:dev": "webpack-dev-server --config config/webpack.config.dev.js --process --profile --colors  --watch --display-error-details --display-cached --content-base src/",
+    "server:dev": "webpack-dev-server --config config/webpack.config.dev.js --process --colors  --watch --display-error-details --display-cached --content-base src/",
     "server:dev:hmr": "npm run server:dev -- --inline --hot",
     "server:dev:min": "npm run server:dev:hmr -- --optimize-minimize",
     "server:prod": "http-server dist --cors",
