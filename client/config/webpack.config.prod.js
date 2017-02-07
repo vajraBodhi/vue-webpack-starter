@@ -6,8 +6,8 @@ const commonConfig = require('./webpack.config.common');
 
 // const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-// 验证config文件是否正确
-const validate = require('webpack-validator');
+// Loader选项配置相关插件
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 // 提取css文件，两种模式
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // // 忽略对某些文件的编译
@@ -28,7 +28,7 @@ const METADATA = webpackMerge(commonConfig.metadata, {
     HMR: false
 });
 
-module.exports = validate(webpackMerge(commonConfig, {
+module.exports = webpackMerge(commonConfig, {
     // metadata: METADATA,
 
     debug: false,
@@ -45,7 +45,9 @@ module.exports = validate(webpackMerge(commonConfig, {
 
     plugins: [
         new WebpackMd5Hash(),
-
+        new LoaderOptionsPlugin({
+            debug: true
+        }),
         new DefinePlugin({
             'ENV': JSON.stringify(METADATA.ENV),
             'HMR': METADATA.HMR,
@@ -58,6 +60,7 @@ module.exports = validate(webpackMerge(commonConfig, {
         }),
 
         new UglifyJsPlugin({
+            sourceMap: true,
             beautify: false,
             output: {
                 comments: false
@@ -95,4 +98,4 @@ module.exports = validate(webpackMerge(commonConfig, {
         clearImmediate: false,
         setImmediate: false
     }
-}));
+});

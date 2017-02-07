@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const helpers = require('./helpers');
 
+const BannerPlugin = require('webpack/lib/BannerPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // 处理html文件做变量替换等
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,8 +18,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 // // 定义一些全局变量
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-// 避免文件不变时，hash发生变化
-const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
 
 
 const METADATA = {
@@ -33,7 +32,7 @@ const METADATA = {
 
 module.exports = {
   // 设置一些跟页面有关的变量
-  metadata: METADATA,
+  // metadata: METADATA,
   entry: {
     polyfills: './src/polyfills.js',
     main: './src/main.js'
@@ -43,34 +42,26 @@ module.exports = {
     // alias: {
     //   vue: 'vue/dist/vue.common.js'
     // },
-    extensions: ['', '.js', '.json'],
-    root: helpers.root('src')//,
-    // moduleDirectories: ['node-modules']
+    extensions: ['.js', '.json'],
+    modules: [helpers.root('src'), 'node-modules']
   },
 
   module: {
-    preLoaders: [
-    // {
-    //   test: /\.js$/,
-    //   loader: 'eslint',
-    //   exclude: /node_modules/
-    // },
-    {
+    rules: [{
       test: /\.js$/,
       loader: 'source-map-loader',
+      enforce: 'pre',
       exclude: [helpers.root('node_modules')]
-    }],
-
-    loaders: [{
-      test: /\.js$/,
+    }/*, {
+      test: /polyfills.js$/,
       loader: 'babel-loader',
+      options: {
+        "presets": ["es2015", { "modules": true }]// 区别webpack对ES6的整体策略
+      },
       exclude: /(node_modules|bower_components)/
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }, {
+    }*/, {
       test: /\.css$/,
-      loader: 'to-string-loader!css-loader'
+      use: ['to-string-loader', 'css-loader']
     }, {
       test: /\.html$/,
       loader: 'raw-loader',
@@ -78,7 +69,7 @@ module.exports = {
     }, {
       test: /\.scss$/,
       exclude: /node_modules/,
-      loader: 'raw-loader!sass-loader'
+      use: ['raw-loader', 'sass-loader']
     }]
   },
 
@@ -88,14 +79,18 @@ module.exports = {
       verbose: true, // Write logs to console.
       dry: false // Do not delete anything, good for testing.
     }),
-
+    new BannerPlugin({
+      banner: 'jkkj',
+      // raw: true,
+      entryOnly: true
+    }),
     new AssetsPlugin({
       path: helpers.root('dist'),
       filename: 'webpack-assets.json',
       prettyPrint: true
     }),
     new DedupePlugin(),
-    new OccurenceOrderPlugin(true),
+    // new OccurenceOrderPlugin(true),webpack2.0不再需要
     new CommonsChunkPlugin({
       name: ['polyfills']
     }),

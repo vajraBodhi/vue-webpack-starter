@@ -1,5 +1,7 @@
-var MigrationOverlay = require('./routes/migration');
+// var MigrationOverlay = require('./routes/migration');
+import MigrationOverlay from './routes/migration';
 
+window.a = 10;
 window.map=null,
 window.mOverlay=null,
 window.onload = function(){

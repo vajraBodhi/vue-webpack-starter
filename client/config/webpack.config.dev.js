@@ -5,11 +5,10 @@ const helpers = require('./helpers');
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.config.common');
 
-// 验证config文件是否正确
-const validate = require('webpack-validator');
 // 在编译期定义一些直接访问的常量，用以区分开发跟最终构建时做不同行为
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-// const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+// Loader选项配置相关插件
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 // // 自动打开浏览器
 // const OpenBrowserPlugin = require('open-browser-plugin');
 // // 压缩通过你屏幕scripts中是否开启optimize minimize来设置
@@ -31,10 +30,8 @@ const METADATA = webpackMerge(commonConfig.metadata, {
 
 console.log(helpers.root('dist'));
 
-module.exports = validate(webpackMerge(commonConfig, {
-    metadata: METADATA,
-
-    debug: true,
+module.exports = webpackMerge(commonConfig, {
+    // metadata: METADATA,
     devtool: 'cheap-module-source-map',
 
     output: {
@@ -48,6 +45,9 @@ module.exports = validate(webpackMerge(commonConfig, {
     },
 
     plugins: [
+    new LoaderOptionsPlugin({
+        debug: true
+    }),
     // 此插件定义的全局变量在代码中可以使用，编译后会自动替换
     new DefinePlugin({
         'ENV': JSON.stringify(METADATA.ENV),
@@ -59,7 +59,11 @@ module.exports = validate(webpackMerge(commonConfig, {
             'CONFIG': JSON.stringify(METADATA.CONFIG)
         }
     }),
-    new ExtractTextPlugin("css/[name.css]"/*, {allChunks: true}*/)
+    new ExtractTextPlugin({
+        filename: 'css/[name.css]'//,
+        // disable: false,
+        // allChunks: true,
+    })
     ],
 
     devServer: {
@@ -71,8 +75,8 @@ module.exports = validate(webpackMerge(commonConfig, {
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
-        },
-        outputPath: METADATA.host + ':' + METADATA.port + '/'
+        }//,
+        // outputPath: METADATA.host + ':' + METADATA.port + '/'
     },
 
     node: {
@@ -83,4 +87,4 @@ module.exports = validate(webpackMerge(commonConfig, {
         clearImmediate: false,
         setImmediate: false
     }
-}));
+});

@@ -124,8 +124,8 @@
       context.save();
       context.lineWidth = this.lineWidth;
       context.strokeStyle = this.strokeStyle;
-      context.shadowColor = this.strokeStyle;
-      context.shadowBlur = this.shadowBlur || 2;
+      // context.shadowColor = this.strokeStyle;
+      // context.shadowBlur = this.shadowBlur || 2;
 
       context.beginPath();
       context.arc(this.centerX, this.centerY, this.radius, this.startAngle, this.endAngle, false);
@@ -174,8 +174,8 @@
       var strokeColor = this.color;
       strokeColor = utils.calculateColor(strokeColor, 1 - this.r / this.maxRadius);
       context.strokeStyle = strokeColor;
-      context.shadowBlur = this.shadowBlur;
-      context.shadowColor = strokeColor;
+      //context.shadowBlur = this.shadowBlur;
+      //context.shadowColor = strokeColor;
       context.lineWidth = this.lineWidth;
       context.beginPath();
       context.arc(0, 0, this.r, 0, Math.PI * 2, false);
@@ -239,9 +239,9 @@
         x: 50,
         y:80,
         rotation: 50 * Math.PI / 180,
-        style: 'circle',
+        style: 'arrow',
         color: 'rgb(255, 255, 255)',
-        size: 1.5,
+        size: 2,
         borderWidth: 0,
         borderColor: this.strokeStyle
       });
@@ -252,7 +252,7 @@
       context.lineWidth = lineWidth;
       // context.lineWidth = 5;
       context.strokeStyle = strokeColor;
-      context.shadowColor = this.strokeStyle;
+      // context.shadowColor = this.strokeStyle;
       // context.shadowBlur = 5;
       context.lineCap = "round";
       context.beginPath();
@@ -385,9 +385,9 @@
           x: element.to[0],
           y: element.to[1],
           rotation: arc.endAngle + Math.PI / 2,
-          style: 'circle',
+          style: 'arrow',
           color: element.color,
-          size: 2,
+          size: 4,
           borderWidth: 0,
           borderColor: element.color
         });
