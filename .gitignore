@@ -1,6 +1,6 @@
 /node_modules
 /server/node_modules
 /client/.sass-cache
-/client/dist
+##/client/dist
 /client/node_modules
 /client/tmp
